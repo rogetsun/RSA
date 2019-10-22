@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.uv</groupId>
+    <artifactId>rsa</artifactId>
+    <version>1.0</version>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>3.9.6</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+
+        <plugins>
+            <!-- 使用assembly插件将依赖jar包解压打进一个完整的jar包,并且可执行 -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptorRefs>
+                        <!-- 依赖打入jar包 -->
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <!-- 此处指定main方法入口的class -->
+                            <mainClass>com.uv.rsa.RSAMain</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assembly</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--指定项目jdk-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <properties>
+        <!-- 文件拷贝时的编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 编译时的编码 -->
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+    </properties>
+</project>
